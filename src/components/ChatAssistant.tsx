@@ -53,8 +53,8 @@ const ChatAssistant = ({ context }: ChatAssistantProps) => {
   };
 
   return (
-    <div className="w-full flex justify-center">
-      <div className="w-full max-w-3xl rounded-2xl border bg-card px-7 py-6 shadow-md">
+    <div className="w-full flex justify-center py-6">
+      <div className="w-full max-w-4xl rounded-2xl border bg-card px-8 py-8 shadow-md">
         <div className="flex items-baseline justify-between mb-3">
           <div>
             <p className="text-base font-semibold tracking-tight text-foreground">
@@ -65,8 +65,8 @@ const ChatAssistant = ({ context }: ChatAssistantProps) => {
             </p>
           </div>
         </div>
-        <div className="max-h-72 overflow-y-auto space-y-2 mb-4 text-sm">
-        {messages.map((m, i) => (
+        <div className="max-h-80 overflow-y-auto space-y-3 mb-6 text-sm">
+          {messages.map((m, i) => (
           <div
             key={i}
             className={
@@ -80,30 +80,25 @@ const ChatAssistant = ({ context }: ChatAssistantProps) => {
             </span>
             <span>{m.content}</span>
           </div>
-        ))}
-        {messages.length === 0 && (
-          <p className="text-sm text-muted-foreground">
-            Try asking: &quot;Which states have the most uncovered loads right now?&quot;
-          </p>
-        )}
+          ))}
         </div>
         <div className="flex items-end gap-3">
-        <textarea
+          <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           className="flex-1 resize-none rounded-lg border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           rows={3}
           placeholder="Ask a question about this dashboard..."
-        />
-        <button
+          />
+          <button
           type="button"
           onClick={handleSend}
           disabled={loading || !input.trim()}
           className="inline-flex items-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm disabled:opacity-60"
-        >
-          {loading ? "Thinking…" : "Send"}
-        </button>
+          >
+            {loading ? "Thinking…" : "Send"}
+          </button>
         </div>
         {error && <p className="mt-2 text-xs text-destructive">{error}</p>}
       </div>
