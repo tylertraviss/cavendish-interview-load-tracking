@@ -1,73 +1,57 @@
-# Welcome to your Lovable project
+# Load Tracking Dashboard
 
-## Project info
+Interactive web app for exploring and analyzing load tracking data. Built for an interview exercise to demonstrate front‑end architecture, data visualization, and UX around large tabular datasets.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Features
 
-## How can I edit this code?
+- **CSV upload & parsing**: Import load tracking data from CSV (via `papaparse` / `xlsx`).
+- **Filtering & search**: Quickly slice data by key fields (e.g. date ranges, status, lanes, carriers).
+- **Sorting & pagination**: Efficient navigation of large tables.
+- **Charts & metrics**: High‑level KPIs and trends visualized with `recharts`.
+- **Responsive UI**: Accessible, keyboard‑friendly UI using `shadcn-ui`, Radix primitives, and Tailwind.
 
-There are several ways of editing your application.
+## Tech stack
 
-**Use Lovable**
+- **Frontend**: React 18, TypeScript, Vite
+- **UI**: shadcn-ui, Radix UI, Tailwind CSS, Lucide icons
+- **State / data**: React Query for async data (where applicable)
+- **Testing**: Vitest, Testing Library, Playwright (E2E)
+- **Tooling**: ESLint, TypeScript, PostCSS
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Getting started
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+git clone <REPO_URL>
+cd cavendish-interview-load-tracking
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The app will be available at `http://localhost:5173` by default (Vite).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Running tests
 
-**Use GitHub Codespaces**
+```sh
+# Unit / integration tests
+npm test
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Watch mode
+npm run test:watch
 
-## What technologies are used for this project?
+# E2E tests (requires dev server running on another terminal)
+npm run dev
+npx playwright test
+```
 
-This project is built with:
+## Project structure (high level)
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- `src/` – main application code
+  - `components/` – reusable presentational and layout components
+  - `features/` – load‑tracking specific screens, tables, and charts
+  - `lib/` – utilities (parsers, formatting, table helpers, etc.)
+- `public/` – static assets
 
-## How can I deploy this project?
+## Notes for reviewers
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- The focus of this project is **data-heavy UI**, with attention to performance, UX, and code organization.
+- I’ve optimized for **clarity and maintainability** over over‑engineering; most pieces can be extended (e.g. adding new filters, derived metrics, or visualizations) with minimal changes.
