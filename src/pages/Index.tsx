@@ -8,6 +8,7 @@ import WeightByStateChart from "@/components/dashboard/WeightByStateChart";
 import TrendChart from "@/components/dashboard/TrendChart";
 import DataTable from "@/components/dashboard/DataTable";
 import { Loader2 } from "lucide-react";
+import { calculateKpis } from "@/lib/calculations";
 
 const Index = () => {
   const { mergedData, divisions, loading } = useDashboardData();
@@ -18,14 +19,10 @@ const Index = () => {
     return mergedData.filter((d) => d.salesDivisionName === selectedDivision);
   }, [mergedData, selectedDivision]);
 
-  const totalLoads = filteredData.length;
-  const totalWeight = useMemo(
-    () => filteredData.reduce((sum, d) => sum + d.weight, 0),
-    [filteredData]
+  const { totalLoads, totalWeight, avgWeight, uncoveredRate } = useMemo(
+    () => calculateKpis(filteredData, mergedData),
+    [filteredData, mergedData]
   );
-  const avgWeight = totalLoads > 0 ? Math.round(totalWeight / totalLoads) : 0;
-  // Uncovered rate: assume all loaded records are uncovered out of a nominal baseline
-  const uncoveredRate = mergedData.length > 0 ? (filteredData.length / mergedData.length) * 100 : 0;
 
   if (loading) {
     return (
