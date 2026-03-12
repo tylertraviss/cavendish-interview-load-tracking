@@ -7,7 +7,7 @@ import StateMap from "@/components/dashboard/StateMap";
 import WeightByStateChart from "@/components/dashboard/WeightByStateChart";
 import TrendChart from "@/components/dashboard/TrendChart";
 import DataTable from "@/components/dashboard/DataTable";
-import { Loader2 } from "lucide-react";
+import { Loader2, Globe2, Github } from "lucide-react";
 import { calculateKpis } from "@/lib/calculations";
 import ChatAssistant from "@/components/ChatAssistant";
 
@@ -53,8 +53,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b bg-card px-6 py-8">
-        <div className="max-w-[1400px] mx-auto flex flex-col gap-3">
+      <header className="border-b bg-card px-6 pt-6 pb-4">
+        <div className="max-w-[1400px] mx-auto flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-lg font-semibold text-foreground">
@@ -64,18 +64,32 @@ const Index = () => {
                 By Region & Sales Division
               </p>
             </div>
-            <div className="hidden sm:flex items-center gap-2 bg-muted rounded-full px-4 py-1.5">
-              <span className="text-sm font-semibold text-foreground tabular-nums">
-                {mergedData.length.toLocaleString()}
-              </span>
-              <span className="text-xs text-muted-foreground">total records</span>
+            <div className="hidden sm:flex items-center gap-4 text-xs text-muted-foreground">
+              <a
+                href="https://www.tylertravis.ca"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1 hover:text-primary font-medium"
+              >
+                <Globe2 className="w-3.5 h-3.5" />
+                <span>tylertravis.ca</span>
+              </a>
+              <a
+                href="https://github.com/tylertraviss"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1 hover:text-primary font-medium"
+              >
+                <Github className="w-3.5 h-3.5" />
+                <span>/tylertraviss</span>
+              </a>
             </div>
           </div>
           <ChatAssistant context={assistantContext} />
         </div>
       </header>
 
-      <main className="max-w-[1400px] mx-auto px-4 sm:px-6 pt-8 pb-6 space-y-8">
+      <main className="max-w-[1400px] mx-auto px-4 sm:px-6 pt-12 pb-8 space-y-8">
         {/* Division Filter */}
         <DivisionFilter
           divisions={divisions}
