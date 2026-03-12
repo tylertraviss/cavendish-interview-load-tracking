@@ -9,6 +9,7 @@ import TrendChart from "@/components/dashboard/TrendChart";
 import DataTable from "@/components/dashboard/DataTable";
 import { Loader2 } from "lucide-react";
 import { calculateKpis } from "@/lib/calculations";
+import ChatAssistant from "@/components/ChatAssistant";
 
 const Index = () => {
   const { mergedData, divisions, loading } = useDashboardData();
@@ -22,6 +23,20 @@ const Index = () => {
   const { totalLoads, totalWeight, avgWeight, uncoveredRate } = useMemo(
     () => calculateKpis(filteredData, mergedData),
     [filteredData, mergedData]
+  );
+
+  const assistantContext = useMemo(
+    () => ({
+      selectedDivision,
+      totals: {
+        totalLoads,
+        totalWeight,
+        avgWeight,
+        uncoveredRate,
+      },
+      totalRecords: mergedData.length,
+    }),
+    [selectedDivision, totalLoads, totalWeight, avgWeight, uncoveredRate, mergedData.length]
   );
 
   if (loading) {
@@ -39,21 +54,24 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b bg-card px-6 py-5">
-        <div className="max-w-[1400px] mx-auto flex items-center justify-between">
-          <div>
-            <h1 className="text-lg font-semibold text-foreground">
-              Executive Overview: Uncovered Transport Loads
-            </h1>
-            <p className="text-sm text-muted-foreground mt-0.5">
-              By Region & Sales Division
-            </p>
+        <div className="max-w-[1400px] mx-auto flex flex-col gap-3">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-lg font-semibold text-foreground">
+                Executive Overview: Uncovered Transport Loads
+              </h1>
+              <p className="text-sm text-muted-foreground mt-0.5">
+                By Region & Sales Division
+              </p>
+            </div>
+            <div className="hidden sm:flex items-center gap-2 bg-muted rounded-full px-4 py-1.5">
+              <span className="text-sm font-semibold text-foreground tabular-nums">
+                {mergedData.length.toLocaleString()}
+              </span>
+              <span className="text-xs text-muted-foreground">total records</span>
+            </div>
           </div>
-          <div className="hidden sm:flex items-center gap-2 bg-muted rounded-full px-4 py-1.5">
-            <span className="text-sm font-semibold text-foreground tabular-nums">
-              {mergedData.length.toLocaleString()}
-            </span>
-            <span className="text-xs text-muted-foreground">total records</span>
-          </div>
+          <ChatAssistant context={assistantContext} />
         </div>
       </header>
 
