@@ -57,12 +57,17 @@ const Index = () => {
         <div className="max-w-[1400px] mx-auto flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-lg font-semibold text-foreground">
-                Executive Overview: Uncovered Transport Loads
-              </h1>
-              <p className="text-sm text-muted-foreground mt-0.5">
-                By Region & Sales Division
-              </p>
+              <div className="flex items-center gap-3">
+                <img
+                  src="/logo.png"
+                  alt="Cavendish Farms logo"
+                  className="h-10 w-auto"
+                  loading="lazy"
+                />
+                <h1 className="text-lg font-semibold text-foreground">
+                  Executive Overview: Uncovered Transport Loads
+                </h1>
+              </div>
             </div>
             <div className="hidden sm:flex items-center gap-4 text-xs text-muted-foreground">
               <a
