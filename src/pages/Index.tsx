@@ -35,8 +35,18 @@ const Index = () => {
         uncoveredRate,
       },
       totalRecords: mergedData.length,
+      allRecords: mergedData,
+      currentViewRecords: filteredData,
     }),
-    [selectedDivision, totalLoads, totalWeight, avgWeight, uncoveredRate, mergedData.length]
+    [
+      selectedDivision,
+      totalLoads,
+      totalWeight,
+      avgWeight,
+      uncoveredRate,
+      mergedData,
+      filteredData,
+    ]
   );
 
   if (loading) {
