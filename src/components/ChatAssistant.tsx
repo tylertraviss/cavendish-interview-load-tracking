@@ -53,51 +53,60 @@ const ChatAssistant = ({ context }: ChatAssistantProps) => {
   };
 
   return (
-    <div className="w-full max-w-xl rounded-xl border bg-card px-4 py-3 shadow-sm">
-      <p className="text-xs font-medium text-muted-foreground mb-2">
-        Ask about this dashboard&apos;s loads, divisions, and states.
-      </p>
-      <div className="max-h-40 overflow-y-auto space-y-1 mb-2 text-xs">
+    <div className="w-full flex justify-center">
+      <div className="w-full max-w-3xl rounded-2xl border bg-card px-7 py-6 shadow-md">
+        <div className="flex items-baseline justify-between mb-3">
+          <div>
+            <p className="text-base font-semibold tracking-tight text-foreground">
+              FryGuyAI
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Ask about this dashboard&apos;s loads, divisions, and states.
+            </p>
+          </div>
+        </div>
+        <div className="max-h-72 overflow-y-auto space-y-2 mb-4 text-sm">
         {messages.map((m, i) => (
           <div
             key={i}
             className={
               m.role === "user"
                 ? "text-foreground"
-                : "text-muted-foreground border-l pl-2 border-border"
+                : "text-muted-foreground border-l-2 pl-3 border-border"
             }
           >
             <span className="font-semibold mr-1">
-              {m.role === "user" ? "You" : "Assistant"}:
+              {m.role === "user" ? "You" : "FryGuyAI"}:
             </span>
             <span>{m.content}</span>
           </div>
         ))}
         {messages.length === 0 && (
-          <p className="text-muted-foreground">
-            Example: &quot;Which states have the most uncovered loads right now?&quot;
+          <p className="text-sm text-muted-foreground">
+            Try asking: &quot;Which states have the most uncovered loads right now?&quot;
           </p>
         )}
-      </div>
-      <div className="flex items-end gap-2">
+        </div>
+        <div className="flex items-end gap-3">
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="flex-1 resize-none rounded-md border bg-background px-2 py-1 text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-          rows={2}
+          className="flex-1 resize-none rounded-lg border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          rows={3}
           placeholder="Ask a question about this dashboard..."
         />
         <button
           type="button"
           onClick={handleSend}
           disabled={loading || !input.trim()}
-          className="inline-flex items-center rounded-md bg-primary px-3 py-1 text-xs font-medium text-primary-foreground disabled:opacity-60"
+          className="inline-flex items-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm disabled:opacity-60"
         >
           {loading ? "Thinking…" : "Send"}
         </button>
+        </div>
+        {error && <p className="mt-2 text-xs text-destructive">{error}</p>}
       </div>
-      {error && <p className="mt-1 text-[11px] text-destructive">{error}</p>}
     </div>
   );
 };
