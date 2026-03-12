@@ -9,6 +9,7 @@ import {
 } from "recharts";
 import type { MergedRecord } from "@/hooks/useDashboardData";
 import { useMemo } from "react";
+import { buildStateCountSeries } from "@/lib/calculations";
 
 interface StateBarChartProps {
   data: MergedRecord[];
@@ -16,16 +17,7 @@ interface StateBarChartProps {
 
 const StateBarChart = ({ data }: StateBarChartProps) => {
   const chartData = useMemo(() => {
-    const stateMap = new Map<string, number>();
-    data.forEach((r) => {
-      const state = r.destState || "Unknown";
-      stateMap.set(state, (stateMap.get(state) || 0) + 1);
-    });
-
-    return Array.from(stateMap.entries())
-      .map(([state, count]) => ({ state, count }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 15);
+    return buildStateCountSeries(data);
   }, [data]);
 
   return (

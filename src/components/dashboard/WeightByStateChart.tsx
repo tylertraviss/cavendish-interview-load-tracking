@@ -9,6 +9,7 @@ import {
 } from "recharts";
 import type { MergedRecord } from "@/hooks/useDashboardData";
 import { useMemo } from "react";
+import { buildWeightByStateSeries } from "@/lib/calculations";
 
 interface WeightByStateChartProps {
   data: MergedRecord[];
@@ -16,16 +17,7 @@ interface WeightByStateChartProps {
 
 const WeightByStateChart = ({ data }: WeightByStateChartProps) => {
   const chartData = useMemo(() => {
-    const stateMap = new Map<string, number>();
-    data.forEach((r) => {
-      const state = r.destState || "Unknown";
-      stateMap.set(state, (stateMap.get(state) || 0) + r.weight);
-    });
-
-    return Array.from(stateMap.entries())
-      .map(([state, weight]) => ({ state, weight }))
-      .sort((a, b) => b.weight - a.weight)
-      .slice(0, 12);
+    return buildWeightByStateSeries(data);
   }, [data]);
 
   return (

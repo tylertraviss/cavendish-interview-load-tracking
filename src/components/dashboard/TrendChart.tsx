@@ -9,6 +9,7 @@ import {
 } from "recharts";
 import type { MergedRecord } from "@/hooks/useDashboardData";
 import { useMemo } from "react";
+import { buildTrendSeries } from "@/lib/calculations";
 
 interface TrendChartProps {
   data: MergedRecord[];
@@ -16,18 +17,7 @@ interface TrendChartProps {
 
 const TrendChart = ({ data }: TrendChartProps) => {
   const chartData = useMemo(() => {
-    const dateMap = new Map<string, number>();
-    data.forEach((r) => {
-      const raw = r.targetDeliveryEarly || r.targetShipEarly || r.createDate;
-      if (!raw) return;
-      const date = raw.split(" ")[0]; // extract date part
-      if (!date) return;
-      dateMap.set(date, (dateMap.get(date) || 0) + 1);
-    });
-
-    return Array.from(dateMap.entries())
-      .map(([date, count]) => ({ date, count }))
-      .sort((a, b) => a.date.localeCompare(b.date));
+    return buildTrendSeries(data);
   }, [data]);
 
   return (
