@@ -53,7 +53,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b bg-card px-6 py-5">
+      <header className="border-b bg-card px-6 py-8">
         <div className="max-w-[1400px] mx-auto flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <div>
@@ -75,7 +75,7 @@ const Index = () => {
         </div>
       </header>
 
-      <main className="max-w-[1400px] mx-auto px-4 sm:px-6 py-6 space-y-6">
+      <main className="max-w-[1400px] mx-auto px-4 sm:px-6 pt-8 pb-6 space-y-8">
         {/* Division Filter */}
         <DivisionFilter
           divisions={divisions}
