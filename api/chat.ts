@@ -22,11 +22,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       context?: Record<string, unknown>;
     };
 
+    const narrativeText =
+      typeof context === "object" && context !== null && "narrative" in context
+        ? String((context as { narrative?: unknown }).narrative ?? "")
+        : "";
+
+    const compactNarrative = narrativeText
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .join(" | ");
+
+    const limitedMessages = (messages ?? []).slice(-6);
+
     const systemPrompt =
       "You are an assistant embedded in a transportation load-tracking dashboard. " +
-      "Answer concisely and use the provided context about the current view. " +
-      "If something is not in the context, say you are not sure instead of guessing.\n\n" +
-      `Dashboard context (JSON): ${JSON.stringify(context ?? {}, null, 2)}`;
+      "Answer concisely. Use only the provided context. If something is not in the context, say you are not sure.\n\n" +
+      (compactNarrative ? `Context: ${compactNarrative}` : "Context: (none provided)");
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -36,10 +48,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       },
       body: JSON.stringify({
         model: "gpt-4.1-mini",
-        messages: [
-          { role: "system", content: systemPrompt },
-          ...(messages ?? []),
-        ],
+        messages: [{ role: "system", content: systemPrompt }, ...limitedMessages],
         temperature: 0.2,
       }),
     });
@@ -59,4 +68,3 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(500).json({ error: "Unexpected server error" });
   }
 }
-
