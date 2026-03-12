@@ -11,6 +11,69 @@ import { Loader2, Globe2, Github } from "lucide-react";
 import { calculateKpis } from "@/lib/calculations";
 import ChatAssistant from "@/components/ChatAssistant";
 
+const datasetNarrativeContext = {
+  summary:
+    "Dataset covers uncovered transportation shipments. Metrics indicate capacity shortages and regional pressure, with spikes mid-March.",
+  divisions: {
+    "All Divisions": {
+      loads: 838,
+      totalWeightLbs: 35658641,
+      uncoveredRate: 1,
+      avgWeightLbs: 42552,
+      notes:
+        "Destinations concentrated in Ontario, Minnesota, New York, New Brunswick, Quebec with secondary clusters in Alberta, New Jersey, North Carolina, Texas, Ohio, Virginia, Pennsylvania, Florida, Georgia, Nova Scotia.",
+    },
+    "Canada Foodservice": {
+      loads: 39,
+      totalWeightLbs: 1720946,
+      uncoveredRate: 0.047,
+      avgWeightLbs: 44127,
+      notes:
+        "Eastern Canada gap: Quebec (~20 loads, ~1M lbs) and Ontario (~17 loads, ~700k lbs) dominate, small BC/AB presence.",
+    },
+    "Canada Retail": {
+      loads: 25,
+      totalWeightLbs: 897968,
+      uncoveredRate: 0.03,
+      avgWeightLbs: 35919,
+      notes: "Ontario (~15 loads) and Quebec (~7) lead with minor Alberta/Manitoba demand.",
+    },
+    "National Accounts": {
+      loads: 276,
+      totalWeightLbs: 11568317,
+      uncoveredRate: 0.329,
+      avgWeightLbs: 41914,
+      notes:
+        "Broad US spread: Ohio (~30), New York (~27), Texas (~25) plus VA, NC, PA, GA, MI, FL, IL, AR, ON, MD, MO, KY. Spike late March.",
+    },
+    Unassigned: {
+      loads: 342,
+      totalWeightLbs: 15265797,
+      uncoveredRate: 0.408,
+      avgWeightLbs: 44637,
+      notes:
+        "Largest backlog: Minnesota (~110), Ontario (~70), New Brunswick (~50), followed by AR, NJ, NS, QC, BC, TX, FL, CA, MD.",
+    },
+    "US Foodservice": {
+      loads: 124,
+      totalWeightLbs: 5184507,
+      uncoveredRate: 0.148,
+      avgWeightLbs: 41811,
+      notes:
+        "Dominated by New York (~37 loads) then Wisconsin, Massachusetts, California, New Jersey, Pennsylvania, Vermont, North Carolina, Maryland, Oklahoma, Washington, Georgia, Texas, Connecticut, Maine.",
+    },
+    "US Retail": {
+      loads: 32,
+      totalWeightLbs: 1021106,
+      uncoveredRate: 0.038,
+      avgWeightLbs: 31910,
+      notes:
+        "North Carolina (~10), South Carolina (~8), Maine (~5), Virginia (~3) with smaller NY, PA, ND, VT exposure.",
+    },
+  },
+  trends: "Mid-March spike in uncovered loads followed by decline.",
+};
+
 const Index = () => {
   const { mergedData, divisions, loading } = useDashboardData();
   const [selectedDivision, setSelectedDivision] = useState<string | null>(null);
@@ -37,6 +100,7 @@ const Index = () => {
       totalRecords: mergedData.length,
       allRecords: mergedData,
       currentViewRecords: filteredData,
+      datasetNarrativeContext,
     }),
     [
       selectedDivision,
